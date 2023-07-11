@@ -3,3 +3,4 @@
 #include <math.h>
 
 void changeContrast(int change);
+void usage();

@@ -5,6 +5,23 @@
 
 int main(int argc, char* argv[]){
     //printf("Hello world\n");
+    int choice=0;
+    
+    printf("input options: [1] hide [2] extract");
+    scanf("%d", &choice);
+    switch (choice){
+        case 1:
+        //do something
+        break;
+
+        case 2:
+        //do something
+        break;
+
+        default:
+        usage();
+        exit;
+    }
     changeContrast(255);
     return 0;
 }
@@ -27,6 +44,8 @@ void changeContrast(int change){
     printf("variable change:%d\n", change);
     float f = (259*(change+255))/(255*(259-change));
     printf("variable f:%f\n", f);
+}
 
-    
+void usage(){
+    printf("usage:");
 }
