@@ -5,10 +5,35 @@
 
 int main(int argc, char* argv[]){
     //printf("Hello world\n");
-    /*if (argc < 3){
+    int i=0;
+
+    if (argc < 3){
         usage();
-    }*/
-    int choice=0;
+    }
+    for (i=0;i<argc;i++){
+        switch (*argv[i])
+        {
+            case '-hide':
+            usage();
+            break;
+
+            case '-extract':
+            //extract();
+            break;
+
+            case '-h':
+            usage();
+            break;
+
+            //case "program.exe":
+            //break;
+
+            default:
+            usage();
+
+        }
+    }
+    /*int choice=0;
     
     printf("input options: [1] hide [2] extract");
     scanf("%d", &choice);
@@ -24,6 +49,7 @@ int main(int argc, char* argv[]){
         default:
         usage();
     }
+    */
     changeContrast(255);
     return 0;
 }
