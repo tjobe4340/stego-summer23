@@ -1,5 +1,7 @@
-#include <stdlib.h>
-#include <stdio.h>
+#include "main.h"
+//#include <opencv>
+//#include <opencv/cv.h>
+//#include <opencv/highgui.h>
 
 int main(int argc, char* argv[]){
     printf("Hello world\n");
