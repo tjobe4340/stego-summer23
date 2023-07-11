@@ -2,4 +2,4 @@
 #include <stdio.h>
 #include <math.h>
 
-void changContrast(int change);
+void changeContrast(int change);
