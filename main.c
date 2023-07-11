@@ -4,7 +4,8 @@
 //#include <opencv/highgui.h>
 
 int main(int argc, char* argv[]){
-    printf("Hello world\n");
+    //printf("Hello world\n");
+    changeContrast(255);
     return 0;
 }
 
@@ -19,8 +20,13 @@ void changeContrast(int change){
     * newBlue  = Truncate(factor * (Blue(colour)  - 128) + 128) //ensure value is between 0 and 255
     * PutPixelColor(x, y) = RGB(newRed, newGreen, newBlue)
     * R'=F(R-128)+128
+    * 
+    * we are only doing it on grey scale so much simpler
+    * 
     */
-    
+    printf("variable change:%d\n", change);
+    float f = (259*(change+255))/(255*(259-change));
+    printf("variable f:%f\n", f);
 
     
 }
