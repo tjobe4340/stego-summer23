@@ -5,6 +5,9 @@
 
 int main(int argc, char* argv[]){
     //printf("Hello world\n");
+    /*if (argc < 3){
+        usage();
+    }*/
     int choice=0;
     
     printf("input options: [1] hide [2] extract");
@@ -20,7 +23,6 @@ int main(int argc, char* argv[]){
 
         default:
         usage();
-        exit;
     }
     changeContrast(255);
     return 0;
@@ -48,4 +50,5 @@ void changeContrast(int change){
 
 void usage(){
     printf("usage:");
+    exit;
 }
