@@ -3,7 +3,7 @@
 //#include <opencv/cv.h>
 //#include <opencv/highgui.h>
 
-int main(int argc, char* argv[]){
+int main(int argc, char * argv[]){
     //printf("Hello world\n");
     int i=0;
 
@@ -11,7 +11,7 @@ int main(int argc, char* argv[]){
         usage();
     }
     for (i=0;i<argc;i++){
-        switch (*argv[i])
+        /*switch (argv[i])
         {
             case '-hide':
             usage();
@@ -31,7 +31,8 @@ int main(int argc, char* argv[]){
             default:
             usage();
 
-        }
+        }*/
+        
     }
     /*int choice=0;
     
