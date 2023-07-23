@@ -9,16 +9,17 @@ int main(int argc, char * argv[]){
     FILE *fp=NULL;
     FILE *fp2=NULL;
 
-    if (argc < 3){
-        usage();
-    }
+    //if (argc < 3){
+    //    usage();
+    //}
     
-    fp=fopen(argv[2], "r");
+    fp=fopen(argv[1], "r");
     for(i=0;i<4;i++){
         c=fgetc(fp);
-        printf("%c", c);
-        printf("%X", c);
+        //printf("%c", c); //reads ascii of file
+        printf("%X", c); //reads hex values of file
     }
+    rewind(fp); //rewinds pointer
     fclose(fp);
     return 0;
     //for (i=0;i<argc;i++){
