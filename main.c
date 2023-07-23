@@ -5,12 +5,23 @@
 
 int main(int argc, char * argv[]){
     //printf("Hello world\n");
-    int i=0;
+    int c, i=0;
+    FILE *fp=NULL;
+    FILE *fp2=NULL;
 
     if (argc < 3){
         usage();
     }
-    for (i=0;i<argc;i++){
+    
+    fp=fopen(argv[2], "r");
+    for(i=0;i<4;i++){
+        c=fgetc(fp);
+        printf("%c", c);
+        printf("%X", c);
+    }
+    fclose(fp);
+    return 0;
+    //for (i=0;i<argc;i++){
         /*switch (argv[i])
         {
             case '-hide':
@@ -33,7 +44,7 @@ int main(int argc, char * argv[]){
 
         }*/
         
-    }
+    //}
     /*int choice=0;
     
     printf("input options: [1] hide [2] extract");
