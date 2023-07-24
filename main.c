@@ -24,7 +24,11 @@ int main(int argc, char * argv[]){
     //}
     
     f1.fp=fopen(argv[1], "r");
-    //write file open error check
+    /*if(f1.fp==NULL){
+        perror("ERROR: could not open first file");
+        //usage();
+    }*/
+
     fgets(type, 3, f1.fp);// file type
     type[2]='\0';
     f1.location=2;
@@ -38,7 +42,10 @@ int main(int argc, char * argv[]){
     memcpy(string, type, 2);
     string[3]='\0';
     */
-    //write code for error checking of file type
+    if(strcmp(type, "BM") != 0){
+        //perror("ERROR: incorrect file type %s, needs BM\n", type[0]);
+        //usage();
+    }
 
     for(i=0;i<8;i++){
         c=fgetc(f1.fp);
