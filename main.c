@@ -10,6 +10,7 @@
 int main(int argc, char * argv[]){
     //printf("Hello world\n");
     int c, i=0;
+    unsigned int target;// target locatoin of pixel data
     fInfo f1;//cover image
     //FILE *fp=NULL;//cover image
     //FILE *fp2=NULL;//image to hide
@@ -17,6 +18,7 @@ int main(int argc, char * argv[]){
     char type[3], string[255];
     unsigned char dim[5];
     char hex_str[9];//for converting numbers
+
     //if (argc < 3){
     //    usage();
     //}
@@ -25,6 +27,7 @@ int main(int argc, char * argv[]){
     //write file open error check
     fgets(type, 3, f1.fp);// file type
     type[2]='\0';
+    f1.location=2;
     //puts(type);
     //printf("\n");
     /*for(i=0;i<2;i++){
@@ -36,18 +39,43 @@ int main(int argc, char * argv[]){
     string[3]='\0';
     */
     //write code for error checking of file type
-    for(i=0;i<16;i++){
+
+    for(i=0;i<8;i++){
+        c=fgetc(f1.fp);
+        f1.location++;
+    }
+    //get offset
+    for(i=3;i>=0;i--){
+        dim[i]=fgetc(f1.fp);
+        //printf("%c", c); //reads ascii of file
+        //printf("%X", dim[i]); //reads hex values of file
+        f1.location++;
+    }
+    dim[4]='\0';
+
+    for (int i = 0; i < 4; i++) {
+        sprintf(&hex_str[i * 2], "%02X", dim[i]);
+    }
+    //printf("The hexadecimal string is %s\n", hex_str);
+
+    // Convert hex string to integer
+    f1.offset = strtol(hex_str, NULL, 16);
+    //printf("The decimal value is %lu\n", f1.offset);
+
+    //get width
+    for(i=0;i<4;i++){
         c=fgetc(f1.fp);
         //printf("%X", c); //reads hex values of file
+        f1.location++;
     }
     for(i=3;i>=0;i--){
         dim[i]=fgetc(f1.fp);
         //printf("%c", c); //reads ascii of file
         //printf("%X", dim[i]); //reads hex values of file
+        f1.location++;
     }
     dim[4]='\0';
 
-    //get width
     for (int i = 0; i < 4; i++) {
         sprintf(&hex_str[i * 2], "%02X", dim[i]);
     }
@@ -62,6 +90,7 @@ int main(int argc, char * argv[]){
         dim[i]=fgetc(f1.fp);
         //printf("%c", c); //reads ascii of file
         //printf("%X", dim[i]); //reads hex values of file
+        f1.location++;
     }
     dim[4]='\0';
 
@@ -73,6 +102,11 @@ int main(int argc, char * argv[]){
     // Convert hex string to integer
     f1.height = strtol(hex_str, NULL, 16);
     //printf("The decimal value is %lu\n", f1.height);
+
+    //printf("%u", f1.location);
+
+    target = f1.offset - f1.location;
+    //printf("%u", target);
 
     rewind(f1.fp); //rewinds pointer
     fclose(f1.fp);
