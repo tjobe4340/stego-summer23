@@ -12,6 +12,8 @@ int main(int argc, char * argv[]){
     int c, i=0;
     unsigned int target;// target locatoin of pixel data
     fInfo f1;//cover image
+    //fInfo f2;//image to hide
+    fInfo f3;// new image
     //FILE *fp=NULL;//cover image
     //FILE *fp2=NULL;//image to hide
     //FILE *fp3=NULL;//final product
@@ -28,6 +30,16 @@ int main(int argc, char * argv[]){
         perror("ERROR: could not open first file");
         //usage();
     }*/
+
+    f3.fp = fopen("test.bmp", "w");
+    /*if(f1.fp==NULL){
+        perror("ERROR: could not create file");
+        //usage();
+    }*/
+    while((c=getc(f1.fp))!=EOF){
+        putc(c, f3.fp);
+        
+    }
 
     fgets(type, 3, f1.fp);// file type
     type[2]='\0';
