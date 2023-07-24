@@ -3,24 +3,79 @@
 //#include <opencv/cv.h>
 //#include <opencv/highgui.h>
 
+//struct fInfo f1;//cover image
+//struct fInfo f2;//image to hide
+//struct fInfo f3;// final product
+
 int main(int argc, char * argv[]){
     //printf("Hello world\n");
     int c, i=0;
-    FILE *fp=NULL;
-    FILE *fp2=NULL;
-
+    fInfo f1;//cover image
+    //FILE *fp=NULL;//cover image
+    //FILE *fp2=NULL;//image to hide
+    //FILE *fp3=NULL;//final product
+    char type[3], string[255];
+    unsigned char dim[5];
+    char hex_str[9];//for converting numbers
     //if (argc < 3){
     //    usage();
     //}
     
-    fp=fopen(argv[1], "r");
-    for(i=0;i<4;i++){
-        c=fgetc(fp);
+    f1.fp=fopen(argv[1], "r");
+    //write file open error check
+    fgets(type, 3, f1.fp);// file type
+    type[2]='\0';
+    //puts(type);
+    //printf("\n");
+    /*for(i=0;i<2;i++){
+        type[i]=fgetc(f1.fp);
         //printf("%c", c); //reads ascii of file
-        printf("%X", c); //reads hex values of file
+        printf("%c", type[i]); //reads hex values of file
     }
-    rewind(fp); //rewinds pointer
-    fclose(fp);
+    memcpy(string, type, 2);
+    string[3]='\0';
+    */
+    //write code for error checking of file type
+    for(i=0;i<16;i++){
+        c=fgetc(f1.fp);
+        //printf("%X", c); //reads hex values of file
+    }
+    for(i=3;i>=0;i--){
+        dim[i]=fgetc(f1.fp);
+        //printf("%c", c); //reads ascii of file
+        //printf("%X", dim[i]); //reads hex values of file
+    }
+    dim[4]='\0';
+
+    //get width
+    for (int i = 0; i < 4; i++) {
+        sprintf(&hex_str[i * 2], "%02X", dim[i]);
+    }
+    //printf("The hexadecimal string is %s\n", hex_str);
+
+    // Convert hex string to integer
+    f1.width = strtol(hex_str, NULL, 16);
+    //printf("The decimal value is %lu\n", f1.width);
+
+    //gets height
+    for(i=3;i>=0;i--){
+        dim[i]=fgetc(f1.fp);
+        //printf("%c", c); //reads ascii of file
+        //printf("%X", dim[i]); //reads hex values of file
+    }
+    dim[4]='\0';
+
+    for (int i = 0; i < 4; i++) {
+        sprintf(&hex_str[i * 2], "%02X", dim[i]);
+    }
+    //printf("The hexadecimal string is %s\n", hex_str);
+
+    // Convert hex string to integer
+    f1.height = strtol(hex_str, NULL, 16);
+    //printf("The decimal value is %lu\n", f1.height);
+
+    rewind(f1.fp); //rewinds pointer
+    fclose(f1.fp);
     return 0;
     //for (i=0;i<argc;i++){
         /*switch (argv[i])
