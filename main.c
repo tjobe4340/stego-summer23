@@ -40,6 +40,7 @@ int main(int argc, char * argv[]){
         putc(c, f3.fp);
         
     }
+    rewind(f1.fp);
 
     fgets(type, 3, f1.fp);// file type
     type[2]='\0';
