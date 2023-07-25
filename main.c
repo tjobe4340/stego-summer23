@@ -13,10 +13,10 @@ int main(int argc, char * argv[]){
     unsigned int target;// target locatoin of pixel data
     fInfo f1;//cover image
     //fInfo f2;//image to hide
-    //fInfo f3;// new image
+    fInfo f3;// new image
     //FILE *fp=NULL;//cover image
     //FILE *fp2=NULL;//image to hide
-    FILE *fp3=NULL;//final product
+    //FILE *fp3=NULL;//final product
     char type[3], string[255];
     unsigned char dim[5];
     char hex_str[9];//for converting numbers
@@ -31,17 +31,17 @@ int main(int argc, char * argv[]){
         //usage();
     }*/
 
-    fp3 = fopen("test.bmp", "wb");
+    f3.fp = fopen("test.bmp", "wb+");
     /*if(f1.fp==NULL){
         perror("ERROR: could not create file");
         //usage();
     }*/
     while((c=getc(f1.fp))!=EOF){
-        putc(c, fp3);
+        putc(c, f3.fp);
         
     }
     rewind(f1.fp);
-    fclose(fp3);
+    
 
     fgets(type, 3, f1.fp);// file type
     type[2]='\0';
@@ -131,6 +131,7 @@ int main(int argc, char * argv[]){
 
     rewind(f1.fp); //rewinds pointer
     fclose(f1.fp);
+    fclose(f3.fp);
     return 0;
     //for (i=0;i<argc;i++){
         /*switch (argv[i])
