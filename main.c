@@ -36,11 +36,13 @@ int main(int argc, char * argv[]){
         perror("ERROR: could not create file");
         //usage();
     }*/
+    //creats copy of cover to hide data in
     while((c=getc(f1.fp))!=EOF){
         putc(c, f3.fp);
         
     }
     rewind(f1.fp);
+    rewind(f3.fp);
     
 
     fgets(type, 3, f1.fp);// file type
@@ -127,9 +129,16 @@ int main(int argc, char * argv[]){
     //printf("%u", f1.location);
 
     target = f1.offset - f1.location;
-    //printf("%u", target);
+    printf("%u", f1.offset);
+
+    for(i=0;i<f1.offset;i++){
+        //printf("%d\n", i);
+        c=fgetc(f3.fp);
+    }
+
 
     rewind(f1.fp); //rewinds pointer
+    rewind(f3.fp);
     fclose(f1.fp);
     fclose(f3.fp);
     return 0;
