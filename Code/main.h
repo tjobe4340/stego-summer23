@@ -4,7 +4,7 @@
 #include <string.h>
 
 typedef struct fileInfo{
-    FILE *fp;
+    FILE *fp;// file pointer
     //char type[3];
     unsigned int width;//width of image
     unsigned int height;//length of image

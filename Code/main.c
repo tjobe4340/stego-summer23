@@ -20,6 +20,7 @@ int main(int argc, char * argv[]){
     char type[3], string[255];
     unsigned char dim[5];
     char hex_str[9];//for converting numbers
+    unsigned char test;
 
     //if (argc < 3){
     //    usage();
@@ -134,6 +135,14 @@ int main(int argc, char * argv[]){
     for(i=0;i<f1.offset;i++){
         //printf("%d\n", i);
         c=fgetc(f3.fp);
+    }
+    for(i=0;i<8;i++){
+        c=fgetc(f3.fp);
+        test= (unsigned char)2 * c;
+        printf("\n%X", test);
+        fseek(f3.fp, -1, SEEK_CUR);
+        fputc(test, f3.fp);
+        fseek(f3.fp, 0, SEEK_CUR);
     }
 
 
