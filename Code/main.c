@@ -136,9 +136,9 @@ int main(int argc, char * argv[]){
         //printf("%d\n", i);
         c=fgetc(f3.fp);
     }
-    for(i=0;i<8;i++){
+    for(i=0;i<8;i++){//boilerplate contrast change
         c=fgetc(f3.fp);
-        test= (unsigned char)2 * c;
+        test= (unsigned char)2 * c;//actual math for change
         printf("\n%X", test);
         fseek(f3.fp, -1, SEEK_CUR);
         fputc(test, f3.fp);
@@ -219,4 +219,7 @@ void changeContrast(int change){
 void usage(){
     printf("usage:");
     exit;
+}
+void headerInfo(fInfo* f){
+    
 }
