@@ -1,3 +1,15 @@
+/*
+if pixel < 128 make 0, if > make 255
+just make sure cover image is larger than message image
+doesn't need to work perfectly
+possible approacg
+    want hidden image to get darker/brighter slower than cover
+maybe make nubers 127/128 or 128/129 if those don't work
+makes our image come into focus as contrast is increased
+message image all pixels are either 127/128
+or pixel value if 128, clear(and) if 127
+try with msb first
+*/
 #include "main.h"
 //#include <opencv>
 //#include <opencv/cv.h>
@@ -221,5 +233,5 @@ void usage(){
     exit;
 }
 void headerInfo(fInfo* f){
-    
+
 }
