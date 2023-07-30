@@ -3,7 +3,7 @@
 #include <math.h>
 #include <string.h>
 
-typedef struct fileInfo{
+typedef struct {
     FILE *fp;// file pointer
     //char type[3];
     unsigned int width;//width of image
