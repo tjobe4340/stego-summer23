@@ -16,3 +16,4 @@ void changeContrast(int change);
 void usage();
 void headerInfo(fInfo* f);
 void convert(fInfo* fc);
+void hide(fInfo* fa, fInfo message);

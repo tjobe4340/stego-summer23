@@ -20,35 +20,38 @@ try with msb first
 //struct fInfo f3;// final product
 
 int main(int argc, char * argv[]){
-    //printf("Hello world\n");
     int c, i=0;
     unsigned int target;// target location of pixel data
     fInfo f1;//cover image
     fInfo f2;//image to hide
     fInfo f3;// new image
-    //FILE *fp=NULL;//cover image
-    //FILE *fp2=NULL;//image to hide
-    //FILE *fp3=NULL;//final product
     char type[3], string[255];
     unsigned char dim[5];
     char hex_str[9];//for converting numbers
     unsigned char test;
 
-    //if (argc < 3){
-    //    usage();
-    //}
+    if (argc < 3){
+        usage();
+    }
     
     f1.fp=fopen(argv[1], "rb");
-    /*if(f1.fp==NULL){
+    if(f1.fp==NULL){
         perror("ERROR: could not open first file");
-        //usage();
-    }*/
+        usage();
+    }
+
+    f2.fp=fopen(argv[2], "rb");
+    if(f1.fp==NULL){
+        perror("ERROR: could not open second file");
+        usage();
+    }
 
     f3.fp = fopen("test.bmp", "wb+");
-    /*if(f1.fp==NULL){
+    if(f3.fp==NULL){
         perror("ERROR: could not create file");
-        //usage();
-    }*/
+        usage();
+    }
+
     //creats copy of cover to hide data in
     while((c=getc(f1.fp))!=EOF){
         putc(c, f3.fp);
@@ -60,8 +63,12 @@ int main(int argc, char * argv[]){
     /*convert(&f3);//converts to black/white
     */
     headerInfo(&f3);
+    headerInfo(&f2);
     convert(&f3);//converts to black/white
     rewind(f3.fp);
+    rewind(f2.fp);
+
+    hide(&f3, f2);
     
     // fgets(type, 3, f1.fp);// file type
     // type[2]='\0';
@@ -236,7 +243,7 @@ void changeContrast(int change){
 }
 
 void usage(){
-    printf("usage:");
+    printf("usage:\\main.exe [cover image] [message image]\n");
     exit;
 }
 
@@ -336,6 +343,49 @@ void convert(fInfo* fc){
             fseek(fc->fp, -1, SEEK_CUR);
             fputc(temp, fc->fp);
             fseek(fc->fp, 0, SEEK_CUR);
+        }
+    }
+}
+
+void hide(fInfo* fa, fInfo message){
+    int c, d, temp, i;
+    
+    for(i=0;i<fa->offset;i++){
+        c=fgetc(fa->fp);
+    }
+    for(i=0;i<message.offset;i++){
+        c=fgetc(message.fp);
+    }
+
+    while((c=getc(fa->fp))!=EOF){
+        d=fgetc(message.fp);
+    //     if(c==255){
+    //         //d=fgetc(message.fp);
+    //         if(d>127){
+    //             temp=240;
+    //             fseek(fa->fp, -1, SEEK_CUR);
+    //             fputc(temp, fa->fp);
+    //             fseek(fa->fp, 0, SEEK_CUR);
+    //         }else{
+    //             temp=16;
+    //             fseek(fa->fp, -1, SEEK_CUR);
+    //             fputc(temp, fa->fp);
+    //             fseek(fa->fp, 0, SEEK_CUR);
+    //         }
+    //     }
+    // }
+        if(d>127){
+            if(c==255){
+                temp=240;
+                fseek(fa->fp, -1, SEEK_CUR);
+                fputc(temp, fa->fp);
+                fseek(fa->fp, 0, SEEK_CUR);
+            }else{
+                temp=16;
+                fseek(fa->fp, -1, SEEK_CUR);
+                fputc(temp, fa->fp);
+                fseek(fa->fp, 0, SEEK_CUR);
+            }
         }
     }
 }
