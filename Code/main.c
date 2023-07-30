@@ -24,7 +24,7 @@ int main(int argc, char * argv[]){
     int c, i=0;
     unsigned int target;// target locatoin of pixel data
     fInfo f1;//cover image
-    //fInfo f2;//image to hide
+    fInfo f2;//image to hide
     fInfo f3;// new image
     //FILE *fp=NULL;//cover image
     //FILE *fp2=NULL;//image to hide
@@ -233,5 +233,9 @@ void usage(){
     exit;
 }
 void headerInfo(fInfo* f){
+
+}
+
+void convert(fInfo* fc){
 
 }
