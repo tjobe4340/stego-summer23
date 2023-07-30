@@ -154,7 +154,7 @@ int main(int argc, char * argv[]){
     //     //printf("%d\n", i);
     //     c=fgetc(f3.fp);
     // }
-    printf("\nthe width is %u\nthe height is %u", f3.width, f3.height);
+    //printf("\nthe width is %u\nthe height is %u", f3.width, f3.height);
     // for(i=0;i<8;i++){//boilerplate contrast change
     //     c=fgetc(f3.fp);
     //     test= (unsigned char)2 * c;//actual math for change
