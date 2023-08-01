@@ -1,23 +1,4 @@
-/*
-if pixel < 128 make 0, if > make 255
-just make sure cover image is larger than message image
-doesn't need to work perfectly
-possible approach
-    want hidden image to get darker/brighter slower than cover
-maybe make nubers 127/128 or 128/129 if those don't work
-makes our image come into focus as contrast is increased
-message image all pixels are either 127/128
-or pixel value if 128, clear(and) if 127
-try with msb first
-*/
 #include "main.h"
-//#include <opencv>
-//#include <opencv/cv.h>
-//#include <opencv/highgui.h>
-
-//struct fInfo f1;//cover image
-//struct fInfo f2;//image to hide
-//struct fInfo f3;// final product
 
 int main(int argc, char * argv[]){
     int c, i=0;
@@ -228,11 +209,11 @@ void hide(fInfo* fa, fInfo message){
                 fseek(fa->fp, 0, SEEK_CUR);
             }
         }
+        //logic for if message image is smaller
         countW++;
         if(countW>=message.width){
             printf("%d countW %d\n",countH, countW);
             for(i=0;i<wide;i++){
-                //printf("hit\n");
                 c=getc(fa->fp);
             }
             countW=0;
