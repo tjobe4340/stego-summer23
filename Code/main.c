@@ -27,10 +27,10 @@ int main(int argc, char * argv[]){
         usage();
     }
 
-    f3.fp = fopen("test.bmp", "wb+");
-    if(f3.fp==NULL){
-        perror("ERROR: could not create file\n");
-        usage();
+    if(argc<4){
+        f3.fp = fopen("hidden.bmp", "wb+");
+    }else{
+        f3.fp=fopen(argv[3], "wb+");
     }
 
     //creats copy of cover to hide data in
