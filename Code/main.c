@@ -36,19 +36,19 @@ int main(int argc, char * argv[]){
     
     f1.fp=fopen(argv[1], "rb");
     if(f1.fp==NULL){
-        perror("ERROR: could not open first file");
+        perror("ERROR: could not open first file\n");
         usage();
     }
 
     f2.fp=fopen(argv[2], "rb");
     if(f1.fp==NULL){
-        perror("ERROR: could not open second file");
+        perror("ERROR: could not open second file\n");
         usage();
     }
 
     f3.fp = fopen("test.bmp", "wb+");
     if(f3.fp==NULL){
-        perror("ERROR: could not create file");
+        perror("ERROR: could not create file\n");
         usage();
     }
 
@@ -62,6 +62,11 @@ int main(int argc, char * argv[]){
     
     headerInfo(&f3);
     headerInfo(&f2);
+    printf("height %u\n", f2.width);
+    if(f2.width>f3.width||f2.height>f3.height){
+        perror("ERROR: trying to hide message file that is bigger than cover\n");
+        usage();
+    }
 
     convert(&f3);//converts to black/white
 
@@ -76,6 +81,7 @@ int main(int argc, char * argv[]){
     fclose(f1.fp);
     fclose(f2.fp);
     fclose(f3.fp);
+    usage();
     return 0;
 }
 
@@ -190,14 +196,23 @@ void convert(fInfo* fc){
 }
 
 void hide(fInfo* fa, fInfo message){
-    int c, d, temp, i;
-    
+    int c, d, temp, i, wide, high, countW=0, countH=0;
+
+    //gets width difference
+    wide=fa->width-message.width;
+
+    //gets height difference
+    high=fa->height-message.height;
+
+    //goes to respective offsets
     for(i=0;i<fa->offset;i++){
         c=fgetc(fa->fp);
     }
     for(i=0;i<message.offset;i++){
         c=fgetc(message.fp);
     }
+
+    //hides information
     while((c=getc(fa->fp))!=EOF){
         d=fgetc(message.fp);
         if(d>127){
@@ -212,6 +227,20 @@ void hide(fInfo* fa, fInfo message){
                 fputc(temp, fa->fp);
                 fseek(fa->fp, 0, SEEK_CUR);
             }
+        }
+        countW++;
+        if(countW>=message.width){
+            printf("%d countW %d\n",countH, countW);
+            for(i=0;i<wide;i++){
+                //printf("hit\n");
+                c=getc(fa->fp);
+            }
+            countW=0;
+            countH++;
+        }
+        if(countH>=message.height){
+            printf("countH %d\n", countH);
+            break;
         }
     }
 }
