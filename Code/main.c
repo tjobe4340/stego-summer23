@@ -43,7 +43,7 @@ int main(int argc, char * argv[]){
     
     headerInfo(&f3);
     headerInfo(&f2);
-    printf("height %u\n", f2.width);
+
     if(f2.width>f3.width||f2.height>f3.height){
         perror("ERROR: trying to hide message file that is bigger than cover\n");
         usage();
@@ -212,7 +212,6 @@ void hide(fInfo* fa, fInfo message){
         //logic for if message image is smaller
         countW++;
         if(countW>=message.width){
-            printf("%d countW %d\n",countH, countW);
             for(i=0;i<wide;i++){
                 c=getc(fa->fp);
             }
@@ -220,7 +219,6 @@ void hide(fInfo* fa, fInfo message){
             countH++;
         }
         if(countH>=message.height){
-            printf("countH %d\n", countH);
             break;
         }
     }
