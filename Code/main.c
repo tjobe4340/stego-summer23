@@ -41,8 +41,8 @@ int main(int argc, char * argv[]){
     rewind(f1.fp);
     rewind(f3.fp);
     
-    headerInfo(&f3);
-    headerInfo(&f2);
+    headerInfo(&f3, 3);
+    headerInfo(&f2, 2);
 
     if(f2.width>f3.width||f2.height>f3.height){
         perror("ERROR: trying to hide message file that is bigger than cover\n");
@@ -91,12 +91,12 @@ void usage(){
     exit(-1);
 }
 
-void headerInfo(fInfo* f){
+void headerInfo(fInfo* f, int fileNum){
     char type[3], hex_str[9];
     int c, i;
     unsigned char dim[5];
 
-    printf("Getting header info\n");//progress
+    printf("Getting header info for file %d\n", fileNum);//progress
 
     fgets(type, 3, f->fp);// file type
     type[2]='\0';
