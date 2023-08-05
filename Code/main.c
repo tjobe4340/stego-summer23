@@ -96,6 +96,8 @@ void headerInfo(fInfo* f){
     int c, i;
     unsigned char dim[5];
 
+    printf("Getting header info\n");//progress
+
     fgets(type, 3, f->fp);// file type
     type[2]='\0';
     f->location=2;
@@ -155,6 +157,8 @@ void headerInfo(fInfo* f){
 
 void convert(fInfo* fc){
     int temp=0, target=0, c, i;
+
+    printf("Converting to Black/White\n");//progress
     
     target = fc->offset - fc->location;
 
@@ -178,6 +182,8 @@ void convert(fInfo* fc){
 
 void hide(fInfo* fa, fInfo message){
     int c, d, temp, i, wide, high, countW=0, countH=0;
+
+    printf("Hiding\n");//progress
 
     //gets width difference
     wide=fa->width-message.width;
@@ -221,5 +227,30 @@ void hide(fInfo* fa, fInfo message){
         if(countH>=message.height){
             break;
         }
+    }
+}
+
+//test for hiding in gray
+void hide_g(fInfo* ga, fInfo message_g){
+    int c, d, temp, i, wide, high, countW=0, countH=0;
+
+    //gets width difference
+    wide=ga->width-message_g.width;
+
+    //gets height difference
+    high=ga->height-message_g.height;
+
+    //goes to respective offsets
+    for(i=0;i<ga->offset;i++){
+        c=fgetc(ga->fp);
+    }
+    for(i=0;i<message_g.offset;i++){
+        c=fgetc(message_g.fp);
+    }
+
+    //hides information
+    while((c=getc(ga->fp))!=EOF){
+        d=fgetc(message_g.fp);
+        printf("%d\n",c);
     }
 }
