@@ -49,12 +49,14 @@ int main(int argc, char * argv[]){
         usage();
     }
 
-    convert(&f3);//converts to black/white
+    //convert(&f3);//converts to black/white
+    convert_g(&f3, 0.2f);
 
     rewind(f3.fp);
     rewind(f2.fp);
 
-    hide(&f3, f2);
+    //hide(&f3, f2);
+    //hide_g(&f3, f2);
 
     rewind(f1.fp); //rewinds pointer
     rewind(f2.fp);
@@ -180,6 +182,31 @@ void convert(fInfo* fc){
     }
 }
 
+void convert_g(fInfo* gc, float factor){
+    int temp=0, target=0, c, i;
+    float try;
+
+    printf("Reducing contrast\n");//progress
+    
+    target = gc->offset - gc->location;//target location
+
+    //goes to target location
+    for(i=0;i<target;i++){
+        c=fgetc(gc->fp);
+    }
+
+    //edits contrast
+    while((c=getc(gc->fp))!=EOF){
+        try=(float)c/255.0f;//convert to float range [0,1]
+        try=0.5f + factor * (try-0.5f);//reduce contrast by factor, centered around 0 (hence +/-0.5f)
+        temp=(unsigned char) (try*255.0f);//puts back into original range
+
+        fseek(gc->fp, -1, SEEK_CUR);//moves file pointer back 1
+        fputc(temp, gc->fp);//places new value
+        fseek(gc->fp, 0, SEEK_CUR);//moves fp to current
+    }
+}
+
 void hide(fInfo* fa, fInfo message){
     int c, d, temp, i, wide, high, countW=0, countH=0;
 
@@ -251,6 +278,10 @@ void hide_g(fInfo* ga, fInfo message_g){
     //hides information
     while((c=getc(ga->fp))!=EOF){
         d=fgetc(message_g.fp);
-        printf("%d\n",c);
+        printf("number:%d %d\n",countW,c);
+        if(countW==20){
+            exit(0);
+        }
+        countW++;
     }
 }
