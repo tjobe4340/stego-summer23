@@ -1,3 +1,9 @@
+/*
+*Group 3
+*Tyler Jobe
+*Tyler Chanes
+*Brandon Evins
+*/
 #include "main.h"
 
 int main(int argc, char * argv[]){
@@ -22,16 +28,29 @@ int main(int argc, char * argv[]){
     }
 
     f2.fp=fopen(argv[2], "rb");
-    if(f1.fp==NULL){
+    if(f2.fp==NULL){
         perror("ERROR: could not open second file\n");
         usage();
     }
 
     if(argc<4){
-        f3.fp = fopen("hidden.bmp", "wb+");
+        f3.fp=fopen("hidden.bmp", "wb+");
     }else{
         f3.fp=fopen(argv[3], "wb+");
     }
+    if(f3.fp==NULL){
+        perror("ERROR: could not open third file\n");
+        usage();
+    }
+    
+    /*if(argv[4]=="-g"){
+        f3.flag=1;
+    }else if(argv[4]=="-w"){
+        f3.flag=0;
+    }else{
+        perror("ERROR: no flag specified\n");
+        usage();
+    }*/
 
     //creats copy of cover to hide data in
     while((c=getc(f1.fp))!=EOF){
@@ -49,12 +68,17 @@ int main(int argc, char * argv[]){
         usage();
     }
 
-    convert(&f3);//converts to black/white
-
-    rewind(f3.fp);
-    rewind(f2.fp);
-
-    hide(&f3, f2);
+    //if(f3.flag==0){
+        convert(&f3);//converts to black/white
+        rewind(f3.fp);
+        rewind(f2.fp);
+        hide(&f3, f2);
+    // }else{//could not get to work in time
+    //     convert_g(&f3, 0.2f);//grayscale hiding
+    //     rewind(f3.fp);
+    //     rewind(f2.fp);
+    //     hide_g(&f3, f2);
+    // }
 
     rewind(f1.fp); //rewinds pointer
     rewind(f2.fp);
@@ -87,7 +111,7 @@ int main(int argc, char * argv[]){
 // }
 
 void usage(){
-    printf("usage:\\main.exe [cover image] [message image]\n");
+    printf("usage:\\main.exe [cover image] [message image] [output image]\n");// [flag]\n-g:grayscale\n-w:black and white\n");
     exit(-1);
 }
 
@@ -180,6 +204,31 @@ void convert(fInfo* fc){
     }
 }
 
+void convert_g(fInfo* gc, float factor){
+    int temp=0, target=0, c, i;
+    float try;
+
+    printf("Reducing contrast\n");//progress
+    
+    target = gc->offset - gc->location;//target location
+
+    //goes to target location
+    for(i=0;i<target;i++){
+        c=fgetc(gc->fp);
+    }
+
+    //edits contrast
+    while((c=getc(gc->fp))!=EOF){
+        try=(float)c/255.0f;//convert to float range [0,1]
+        try=0.5f + factor * (try-0.5f);//reduce contrast by factor, centered around 0 (hence +/-0.5f)
+        temp=(unsigned char) (try*255.0f);//puts back into original range
+
+        fseek(gc->fp, -1, SEEK_CUR);//moves file pointer back 1
+        fputc(temp, gc->fp);//places new value
+        fseek(gc->fp, 0, SEEK_CUR);//moves fp to current
+    }
+}
+
 void hide(fInfo* fa, fInfo message){
     int c, d, temp, i, wide, high, countW=0, countH=0;
 
@@ -248,9 +297,19 @@ void hide_g(fInfo* ga, fInfo message_g){
         c=fgetc(message_g.fp);
     }
 
-    //hides information
+    //hides information does not currently work
     while((c=getc(ga->fp))!=EOF){
         d=fgetc(message_g.fp);
-        printf("%d\n",c);
+        temp=c%32;
+        if(d>127){
+            temp-=temp;
+        }else{
+            temp+=temp;
+        }
+
+        fseek(ga->fp, -1, SEEK_CUR);
+        fputc(temp, ga->fp);
+        fseek(ga->fp, 0, SEEK_CUR);
+        
     }
 }

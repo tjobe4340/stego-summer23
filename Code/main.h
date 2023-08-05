@@ -10,6 +10,7 @@ typedef struct {
     unsigned int height;//length of image
     unsigned int offset;//offset value for pixel data
     unsigned int location;// current fp location
+    int flag;
 }fInfo;
 
 void changeContrast(int change);
@@ -18,3 +19,4 @@ void headerInfo(fInfo* f, int fileNum);//
 void convert(fInfo* fc);
 void hide(fInfo* fa, fInfo message);
 void hide_g(fInfo* ga, fInfo message_g);
+void convert_g(fInfo* gc, float factor);
