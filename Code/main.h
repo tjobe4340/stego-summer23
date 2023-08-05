@@ -14,7 +14,7 @@ typedef struct {
 
 void changeContrast(int change);
 void usage();
-void headerInfo(fInfo* f);
+void headerInfo(fInfo* f, int fileNum);//
 void convert(fInfo* fc);
 void hide(fInfo* fa, fInfo message);
 void hide_g(fInfo* ga, fInfo message_g);
