@@ -1,3 +1,9 @@
+/*
+*Group 3
+*Tyler Jobe
+*Tyler Chanes
+*Brandon Evins
+*/
 #include "main.h"
 
 int main(int argc, char * argv[]){
@@ -22,16 +28,29 @@ int main(int argc, char * argv[]){
     }
 
     f2.fp=fopen(argv[2], "rb");
-    if(f1.fp==NULL){
+    if(f2.fp==NULL){
         perror("ERROR: could not open second file\n");
         usage();
     }
 
     if(argc<4){
-        f3.fp = fopen("hidden.bmp", "wb+");
+        f3.fp=fopen("hidden.bmp", "wb+");
     }else{
         f3.fp=fopen(argv[3], "wb+");
     }
+    if(f3.fp==NULL){
+        perror("ERROR: could not open third file\n");
+        usage();
+    }
+    
+    /*if(argv[4]=="-g"){
+        f3.flag=1;
+    }else if(argv[4]=="-w"){
+        f3.flag=0;
+    }else{
+        perror("ERROR: no flag specified\n");
+        usage();
+    }*/
 
     //creats copy of cover to hide data in
     while((c=getc(f1.fp))!=EOF){
@@ -49,14 +68,17 @@ int main(int argc, char * argv[]){
         usage();
     }
 
-    //convert(&f3);//converts to black/white
-    convert_g(&f3, 0.2f);
-
-    rewind(f3.fp);
-    rewind(f2.fp);
-
-    //hide(&f3, f2);
-    //hide_g(&f3, f2);
+    //if(f3.flag==0){
+        convert(&f3);//converts to black/white
+        rewind(f3.fp);
+        rewind(f2.fp);
+        hide(&f3, f2);
+    // }else{//could not get to work in time
+    //     convert_g(&f3, 0.2f);//grayscale hiding
+    //     rewind(f3.fp);
+    //     rewind(f2.fp);
+    //     hide_g(&f3, f2);
+    // }
 
     rewind(f1.fp); //rewinds pointer
     rewind(f2.fp);
@@ -89,7 +111,7 @@ int main(int argc, char * argv[]){
 // }
 
 void usage(){
-    printf("usage:\\main.exe [cover image] [message image]\n");
+    printf("usage:\\main.exe [cover image] [message image] [output image]\n");// [flag]\n-g:grayscale\n-w:black and white\n");
     exit(-1);
 }
 
@@ -275,13 +297,19 @@ void hide_g(fInfo* ga, fInfo message_g){
         c=fgetc(message_g.fp);
     }
 
-    //hides information
+    //hides information does not currently work
     while((c=getc(ga->fp))!=EOF){
         d=fgetc(message_g.fp);
-        printf("number:%d %d\n",countW,c);
-        if(countW==20){
-            exit(0);
+        temp=c%32;
+        if(d>127){
+            temp-=temp;
+        }else{
+            temp+=temp;
         }
-        countW++;
+
+        fseek(ga->fp, -1, SEEK_CUR);
+        fputc(temp, ga->fp);
+        fseek(ga->fp, 0, SEEK_CUR);
+        
     }
 }

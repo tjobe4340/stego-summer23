@@ -10,6 +10,7 @@ typedef struct {
     unsigned int height;//length of image
     unsigned int offset;//offset value for pixel data
     unsigned int location;// current fp location
+    int flag;
 }fInfo;
 
 void changeContrast(int change);
